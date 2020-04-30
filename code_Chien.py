@@ -27,7 +27,7 @@ MONTH = { 1:'January',
           11:'November',
           12:'December'}
 
-IP_CAM_ADDRESS = {'CAM1': 0, 'CAM2':'http://192.168.1.6:8080/video', 'CAM3': 'http://192.168.1.8:8080/video'}
+IP_CAM_ADDRESS = {'CAM1': 0, 'CAM2':0, 'CAM3': 0}
 class Ui_Form(QWidget):
   def __init__(self):
       super().__init__()
@@ -36,7 +36,6 @@ class Ui_Form(QWidget):
       self.points_CAM3 = []
   def setupUi(self, Form):
         Form.setObjectName("Form")
-        # Form.resize(580, 580)
         self.tabWidget = QtWidgets.QTabWidget(Form)
         self.tabWidget.setObjectName("tabWidget")
         self.multiTab = QtWidgets.QWidget()
@@ -160,56 +159,37 @@ class Ui_Form(QWidget):
 
 
 
-#=============================================================================================================================        
+# Media Player
         
         self.playRec = QtWidgets.QWidget()
         self.playRec.setObjectName("playRec")
-        self.tabWidget.addTab(self.playRec, "")
-        
+        self.tabWidget.addTab(self.playRec, "")       
         self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
-        #create videowidget object
         videowidget = QVideoWidget()
-        #create open button
         self.openBtn = QtWidgets.QPushButton('Open Video')
-        
-        #create button for playing
         self.playBtn = QtWidgets.QPushButton()
         self.playBtn.setEnabled(False)
-        self.playBtn.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
-        
+        self.playBtn.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))     
         self.stopBtn = QtWidgets.QPushButton()
-        self.stopBtn.setIcon(self.style().standardIcon(QStyle.SP_MediaStop))
-        
+        self.stopBtn.setIcon(self.style().standardIcon(QStyle.SP_MediaStop)) 
         self.slowBtn = QtWidgets.QPushButton()
-        self.slowBtn.setIcon(self.style().standardIcon(QStyle.SP_MediaSeekBackward))
-        
+        self.slowBtn.setIcon(self.style().standardIcon(QStyle.SP_MediaSeekBackward)) 
         self.fastBtn = QtWidgets.QPushButton()
-        self.fastBtn.setIcon(self.style().standardIcon(QStyle.SP_MediaSeekForward))
-        
+        self.fastBtn.setIcon(self.style().standardIcon(QStyle.SP_MediaSeekForward))      
         self.volumeBtn = QtWidgets.QPushButton()
-        self.volumeBtn.setIcon(self.style().standardIcon(QStyle.SP_MediaVolume))
-        
+        self.volumeBtn.setIcon(self.style().standardIcon(QStyle.SP_MediaVolume))       
         self.fullscreenBtn = QPushButton("Full Screen")
-
-        #create slider
         self.slider = QSlider(Qt.Horizontal)
-        self.slider.setRange(0,0)
-        
+        self.slider.setRange(0,0)     
         self.volume_slider = QSlider(Qt.Horizontal)
         self.volume_slider.setRange(0,100)
         self.volume_slider.setValue(100)
-        
-        #create label
         self.label_2_1 = QLabel()
         self.label_2_1.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
         self.label_2_2 = QLabel()
- 
-         #create hbox layout
         hboxLayout_2_1 = QHBoxLayout()
         hboxLayout_2_2 = QHBoxLayout()
         hboxLayout_2_3 = QHBoxLayout()
- 
-         #set widgets to the hbox layout
         hboxLayout_2_1.addWidget(self.slider) 
         hboxLayout_2_2.addWidget(self.openBtn)
         hboxLayout_2_2.addWidget(self.stopBtn)
@@ -219,11 +199,8 @@ class Ui_Form(QWidget):
         hboxLayout_2_2.addWidget(self.volumeBtn)
         hboxLayout_2_2.addWidget(self.volume_slider)
         hboxLayout_2_2.addStretch(1)
-        hboxLayout_2_2.addWidget(self.fullscreenBtn)
-        
+        hboxLayout_2_2.addWidget(self.fullscreenBtn)      
         hboxLayout_2_3.addWidget(videowidget)
-
-        #create vbox layout
         vboxLayout_2_1 = QVBoxLayout()
         vboxLayout_2_1.addLayout(hboxLayout_2_3)
         vboxLayout_2_1.addLayout(hboxLayout_2_1)
@@ -231,12 +208,11 @@ class Ui_Form(QWidget):
         vboxLayout_2_1.addWidget(self.label_2_1)
         self.playRec.setLayout(vboxLayout_2_1)
         
-#===================================================================================================================================
 #Tab Setting
         self.setting = QtWidgets.QWidget()
         self.setting.setObjectName("setting")
         self.tabWidget.addTab(self.setting, "")
-        
+# Cam 1       
         self.camSetting_1 = QtWidgets.QWidget(self.setting)
         self.camSetting_1.setObjectName("camSetting_1")
         self.CAM1_Draw = QtWidgets.QLabel(self.camSetting_1)
@@ -362,16 +338,13 @@ class Ui_Form(QWidget):
         self.draw_CAM3.clicked.connect(self.startDrawAreaCAM3)
         self.remove_CAM3.clicked.connect(self.removeAreaCAM3)
 
-
-
-
-
-#Form.setLayout(tabWidget)
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
         a= QVBoxLayout()
         a.addWidget(self.tabWidget)
         Form.setLayout(a)
+
+# all function 
   def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
@@ -415,8 +388,6 @@ class Ui_Form(QWidget):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.multiTab), _translate("Form", "Multi_IPCam"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.playRec), _translate("Form", "Play Record"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.setting), _translate("Form", "Setting"))
-
-
 
   def open_file(self):
       filename, _ = QFileDialog.getOpenFileName(self, "Open Video")
@@ -477,8 +448,8 @@ class Ui_Form(QWidget):
           self.showNormal()
           print("no Fullscreen")
       else:
-          self.showFullScreen()
-          #QApplication.setOverrideCursor(Qt.BlankCursor)
+          Form.showFullScreen()
+          QApplication.setOverrideCursor(Qt.BlankCursor)
           print("Fullscreen entered")
 
   def fast(self):
@@ -489,9 +460,11 @@ class Ui_Form(QWidget):
 
 
   def image_to_QImage(self, image, label):
+    # print(label.width(), label.height())
     # image = cv2.resize(image, (label.width(), label.height()))
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     height , width, channel = image.shape
+    # print(height, width, channel)
     step = channel * width
     return QImage(image.data, width, height, step, QImage.Format_RGB888)
 
@@ -511,7 +484,7 @@ class Ui_Form(QWidget):
           if self.cap.isOpened():
             now = datetime.now()
             self.savePath1 = self.createDir('IP_CAM_1')
-            self.startTime1 = str(now.day)+' - '+str(now.hour)+':'+str(now.minute)+ ' - '
+            self.startTime1 = str(now.day)+' - '+str(now.hour)+'h'+str(now.minute)+ ' - '
             # fourcc = cv2.VideoWriter_fourcc(*'mp4v')
             fourcc = cv2.VideoWriter_fourcc(*'XVID')
             self.outVivdeo = cv2.VideoWriter(self.savePath1+'output.avi', fourcc, 30, (int(self.cap.get(3)), int(self.cap.get(4))))
@@ -525,14 +498,17 @@ class Ui_Form(QWidget):
   def stop_view(self):
       self.startCAM1.setEnabled(True)
       self.stopCAM1.setEnabled(False)
-      now = datetime.now()
-      fileName = self.startTime1+str(now.hour)+':'+str(now.minute)+'.avi'
-      os.rename(self.savePath1+'output.avi', self.savePath1+fileName)
       self.timer.stop()
+      self.cap.release()
       self.outVivdeo.release()
+      print("ok")
       image = cv2.imread('stopVideo.png')
       self.CAM1.setPixmap(QPixmap.fromImage(self.image_to_QImage(image, self.CAM1)))
-      self.cap.release()
+      print('ok2')
+      now = datetime.now()
+      fileName = self.startTime1+str(now.hour)+'h'+str(now.minute)+'.avi'
+      os.rename(self.savePath1+'output.avi', self.savePath1+fileName)
+        
 
   def viewCam2(self):
       ret, image = self.cap2.read()
@@ -549,7 +525,7 @@ class Ui_Form(QWidget):
           if self.cap2.isOpened():
             now = datetime.now()
             self.savePath2 = self.createDir('IP_CAM_2')
-            self.startTime2 = str(now.day)+' - '+str(now.hour)+':'+str(now.minute)+ ' - '
+            self.startTime2 = str(now.day)+' - '+str(now.hour)+'h'+str(now.minute)+ ' - '
             # fourcc = cv2.VideoWriter_fourcc(*'mp4v')
             fourcc = cv2.VideoWriter_fourcc(*'XVID')
             self.outVivdeo2 = cv2.VideoWriter(self.savePath2+'output2.avi', fourcc, 30, (int(self.cap2.get(3)), int(self.cap2.get(4))))
@@ -562,15 +538,15 @@ class Ui_Form(QWidget):
 
   def stop_view2(self):
       self.start_CAM2.setEnabled(True)
-      self.stop_CAM2.setEnabled(False)
-      now = datetime.now()
-      fileName = self.startTime2+str(now.hour)+':'+str(now.minute)+'.avi'
-      os.rename(self.savePath2+'output2.avi', self.savePath2+fileName)     
+      self.stop_CAM2.setEnabled(False)    
       self.timer2.stop()
       self.outVivdeo2.release()
       image = cv2.imread('stopVideo.png')
       self.CAM2.setPixmap(QPixmap.fromImage(self.image_to_QImage(image, self.CAM2)))
       self.cap2.release()
+      now = datetime.now()
+      fileName = self.startTime2+str(now.hour)+'h'+str(now.minute)+'.avi'
+      os.rename(self.savePath2+'output2.avi', self.savePath2+fileName) 
 
   def viewCam3(self):
       ret, image = self.cap3.read()
@@ -587,7 +563,7 @@ class Ui_Form(QWidget):
           if self.cap3.isOpened():
             now = datetime.now()
             self.savePath3 = self.createDir('IP_CAM_3')
-            self.startTime3 = str(now.day)+' - '+str(now.hour)+':'+str(now.minute)+ ' - '
+            self.startTime3 = str(now.day)+' - '+str(now.hour)+'h'+str(now.minute)+ ' - '
             # fourcc = cv2.VideoWriter_fourcc(*'mp4v')
             fourcc = cv2.VideoWriter_fourcc(*'XVID')
             self.outVivdeo3 = cv2.VideoWriter(self.savePath3+'output3.avi', fourcc, 30, (int(self.cap3.get(3)), int(self.cap3.get(4))))
@@ -600,15 +576,15 @@ class Ui_Form(QWidget):
 
   def stop_view3(self):
       self.start_CAM3.setEnabled(True)
-      self.stop_CAM3.setEnabled(False)
-      now = datetime.now()
-      fileName = self.startTime3+str(now.hour)+':'+str(now.minute)+'.avi'
-      os.rename(self.savePath3+'output3.avi', self.savePath3+fileName)     
+      self.stop_CAM3.setEnabled(False)    
       self.timer3.stop()
       self.outVivdeo3.release()
       image = cv2.imread('stopVideo.png')
       self.CAM3.setPixmap(QPixmap.fromImage(self.image_to_QImage(image, self.CAM3)))
       self.cap3.release()
+      now = datetime.now()
+      fileName = self.startTime3+str(now.hour)+'h'+str(now.minute)+'.avi'
+      os.rename(self.savePath3+'output3.avi', self.savePath3+fileName) 
       
   def createDir(self, IP_CAM_Number: str):
     now = datetime.now()
@@ -693,7 +669,6 @@ class Ui_Form(QWidget):
   def drawArea(self, image, points: list, qlabel: QtWidgets.QLabel):
     image_draw = image.copy()
     image_draw = cv2.resize(image_draw, (qlabel.width(), qlabel.height()))
-    # print(len(points))
     if len(points) > 1:
       cv2.polylines(image_draw, np.array([points]), 1, (255, 0, 0), 1)
       b, g, r = cv2.split(image_draw)
@@ -701,8 +676,6 @@ class Ui_Form(QWidget):
       cv2.fillPoly(r, np.array([points]), (0, 255, 0))
       image_draw = cv2.merge([b, g, r])
     return image_draw
-
-
 
 if __name__ == "__main__":
     import sys
